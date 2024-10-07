@@ -3,7 +3,6 @@ const fs = require('fs');
 
 const server = http.createServer((req, res) => {
     if (req.url === "/books") {
-        // Barcha kitoblarni chiqarish
         fs.readFile('books.json', (err, data) => {
             if (err) {
                 res.writeHead(500, { 'Content-Type': 'text/html' });
@@ -11,13 +10,13 @@ const server = http.createServer((req, res) => {
             }
 
             const books = JSON.parse(data);
-            let html = "<h1>Kitoblar ro'yxati</h1><ul>";
+            let html = "<h1>Kitoblar ro'yxati</h1>";
 
             books.forEach(book => {
-                html += `<li>${book.title} - ${book.author}</li>`;
+                html += `<h1>${book.title} <br> ${book.author}</h1>`;
             });
 
-            html += '</ul>';
+            html += '';
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.end(html);
         });
@@ -35,7 +34,7 @@ const server = http.createServer((req, res) => {
             const book = books.find(b => b.id == bookId);
 
             if (book) {
-                let html = `<h1>${book.title}</h1><p>Muallifi: ${book.author}</p>`;
+                let html = `<h1>${book.title}</h1><h1>Muallifi: ${book.author}</h1>`;
                 res.writeHead(200, { 'Content-Type': 'text/html' });
                 res.end(html);
             } else {
@@ -46,7 +45,7 @@ const server = http.createServer((req, res) => {
     } 
     else {
         res.writeHead(404, { 'Content-Type': 'text/html' });
-        res.end("Biror nars yozzzzzzzz!");
+        res.end("Biror narsa yozzzzzzzz!");
     }
 });
 
